@@ -2,7 +2,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const entries = ref([
+interface FitTrackerEntry {
+  id: number
+  name: string
+  gram: number
+  calories: number
+  carbohydrates: number
+  protein: number
+  date: string
+}
+
+const entries = ref<FitTrackerEntry[]>([
   {
     id: 1,
     name: 'Haferflocken',
@@ -10,7 +20,6 @@ const entries = ref([
     calories: 296.0,
     carbohydrates: 47.0,
     protein: 10.8,
-    registered: false,
     date: '2026-10-19',
   },
   {
@@ -20,7 +29,6 @@ const entries = ref([
     calories: 170.0,
     carbohydrates: 10.0,
     protein: 30.0,
-    registered: true,
     date: '2026-10-19',
   },
 ])
@@ -32,7 +40,6 @@ const entries = ref([
     <ul>
       <li v-for="entry in entries" :key="entry.id">
         <strong>{{ entry.name }}</strong> ({{ entry.gram }}g) – {{ entry.calories }} kcal
-        <span>[{{ entry.registered ? 'DB' : 'Manuell' }}]</span>
       </li>
     </ul>
   </div>
