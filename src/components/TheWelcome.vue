@@ -1,6 +1,7 @@
 <!-- src/components/TheWelcome.vue -->
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
 
 interface FitTrackerEntry {
   id: number
@@ -12,26 +13,13 @@ interface FitTrackerEntry {
   date: string
 }
 
-const entries = ref<FitTrackerEntry[]>([
-  {
-    id: 1,
-    name: 'Haferflocken',
-    gram: 80,
-    calories: 296.0,
-    carbohydrates: 47.0,
-    protein: 10.8,
-    date: '2026-10-19',
-  },
-  {
-    id: 2,
-    name: 'Magerquark',
-    gram: 250,
-    calories: 170.0,
-    carbohydrates: 10.0,
-    protein: 30.0,
-    date: '2026-10-19',
-  },
-])
+const entries = ref<FitTrackerEntry[]>([])
+
+onMounted(async () => {
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL
+  const response = await axios.get<FitTrackerEntry[]>(baseUrl + '/entries')
+  entries.value = response.data
+})
 </script>
 
 <template>
