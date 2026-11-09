@@ -15,11 +15,14 @@ interface FitTrackerEntry {
 
 const entries = ref<FitTrackerEntry[]>([])
 
-onMounted(async () => {
+async function load() {
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL
-  axios.get<FitTrackerEntry[]>(baseUrl + '/entries').then((response) => {
-    entries.value = response.data
-  })
+  const response = await axios.get<FitTrackerEntry[]>(baseUrl + '/entries')
+  entries.value = response.data
+}
+
+onMounted(() => {
+  load()
 })
 </script>
 
