@@ -17,8 +17,9 @@ const entries = ref<FitTrackerEntry[]>([])
 
 onMounted(async () => {
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL
-  const response = await axios.get<FitTrackerEntry[]>(baseUrl + '/entries')
-  entries.value = response.data
+  axios.get<FitTrackerEntry[]>(baseUrl + '/entries').then((response) => {
+    entries.value = response.data
+  })
 })
 </script>
 
